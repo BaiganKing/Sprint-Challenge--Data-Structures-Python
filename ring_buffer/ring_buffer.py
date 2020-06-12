@@ -6,25 +6,44 @@ class RingBuffer:
         self.current = None
         self.storage = DoublyLinkedList()
 
+    def append(self, item):
+        if self.storage.length < self.capacity:
+            self.storage.add_to_tail(item)
+            self.current = self.storage.head
+        elif self.storage.length == self.capacity:
+            remove_head = self.storage.head
+            self.storage.remove_from_head()
+            self.storage.add_to_tail(item)
+            if remove_head == self.current:
+                self.current = self.storage.tail
+        pass
+
+    def get(self):
+        list_buffer_contents = []
+        c = self.current
+        list_buffer_contents.append(c.value)
+        if c.next:
+            n = c.next
+        else:
+            n = self.storage.head
+        while n != c:
+            list_buffer_contents.append(n.value)
+            if n.next:
+                n = n.next
+            else:
+                n = self.storage.head
+        return list_buffer_contents
+
+"""
+Attempt At Stretch
+"""
+
+class ArrayRingBuffer:
+	def __init__(self, capacity):
+		pass
+
 	def append(self, item):
-		if self.storage.length < self.capacity:
-			self.storage.add_to_tail(item)
-			self.current = self.storage.head
-		else:
-
-			if self.current.next == None:
-				self.current.value = item
-				self.current = self.storage.head
-
-			else:
-				self.current.value = item
-				self.current = self.current.next
+		pass
 
 	def get(self):
-		list_buffer_contents = []
-		start_value = self.storage.head.value
-		current = self.storage.head
-		while current is not None:
-			list_buffer_contents.append(current.value)
-			current = current.next
-		return list_buffer_contents
+		pass
